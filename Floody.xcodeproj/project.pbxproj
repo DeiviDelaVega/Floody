@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		47D3D96E2ED3E24B009A2296 /* Exceptions for "Floody" folder in "Floody" target */ = {
+		7C0C871C2EDBD2E400CE0ADD /* Exceptions for "Floody" folder in "Floody" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -21,10 +21,10 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		47D3D95E2ED3E243009A2296 /* Floody */ = {
+		7C0C870E2EDBD2E400CE0ADD /* Floody */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				47D3D96E2ED3E24B009A2296 /* Exceptions for "Floody" folder in "Floody" target */,
+				7C0C871C2EDBD2E400CE0ADD /* Exceptions for "Floody" folder in "Floody" target */,
 			);
 			path = Floody;
 			sourceTree = "<group>";
@@ -45,7 +45,7 @@
 		47D3D9532ED3E243009A2296 = {
 			isa = PBXGroup;
 			children = (
-				47D3D95E2ED3E243009A2296 /* Floody */,
+				7C0C870E2EDBD2E400CE0ADD /* Floody */,
 				47D3D95D2ED3E243009A2296 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,7 +74,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				47D3D95E2ED3E243009A2296 /* Floody */,
+				7C0C870E2EDBD2E400CE0ADD /* Floody */,
 			);
 			name = Floody;
 			packageProductDependencies = (
