@@ -1,7 +1,7 @@
 import UIKit
 
 class HistoricalController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+
     @IBOutlet weak var scCategoria: UISegmentedControl!
     @IBOutlet weak var tvProducto: UITableView!
     
