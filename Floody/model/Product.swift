@@ -1,7 +1,11 @@
 import UIKit
 
 struct Product {
-    let name: String
-    let countries: String
-    let imageName: String
+    var code: String = ""
+    var name: String = "Sin nombre"
+    var countries: String = "No especificado"
+    var imageName: String = "no_image"
+    var brand: String = "Sin marca"
+    var calories: String = "-"
 }
+

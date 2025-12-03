@@ -1500,6 +1500,10 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="egP-BH-x8t"/>
+                    <connections>
+                        <outlet property="cameraPreviewView" destination="41G-Lu-sL6" id="1Ah-Zk-aax"/>
+                        <outlet property="scannedCountLabel" destination="6kW-Lq-0YT" id="pdU-qa-Z75"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcV-ek-fdZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

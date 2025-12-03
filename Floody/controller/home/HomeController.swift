@@ -1,29 +1,61 @@
-//
-//  HomeController.swift
-//  Floody
-//
-//  Created by Yuliana Chambi on 30/11/25.
-//
-
 import UIKit
+import AVFoundation
 
 class HomeController: UIViewController {
+
+    @IBOutlet weak var cameraPreviewView: UIView!
+    @IBOutlet weak var scannedCountLabel: UILabel!
+
+    private let scanner = BarcodeScannerService()
+
+    private var scannedCount: Int = 0 {
+        didSet {
+            scannedCountLabel.text = "\(scannedCount)"
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        scannedCount = 0
+
+        #if targetEnvironment(simulator)
+        startSimulatorMode()
+        #else
+        startCameraMode()
+        #endif
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Simulator Mode
+    private func startSimulatorMode() {
+        let fakeCode = "5449000054227"
+        scannedCount += 1
+        loadProduct(code: fakeCode)
     }
-    */
 
+    // MARK: - Camera Mode
+    private func startCameraMode() {
+        scanner.start(in: cameraPreviewView) { [weak self] code in
+            guard let self = self else { return }
+
+            self.scannedCount += 1
+            self.loadProduct(code: code)
+        }
+    }
+
+    // MARK: - Product Loader
+    private func loadProduct(code: String) {
+        ProductService.shared.fetchProduct(code: code) { product in
+            guard let product = product else {
+                print("Product not found")
+                return
+            }
+
+            DispatchQueue.main.async {
+                print("Name:", product.name)
+                print("Brand:", product.brand)
+                print("Calories:", product.calories)
+            }
+        }
+    }
 }
