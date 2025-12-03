@@ -30,4 +30,23 @@ class CountrySelectController: UIViewController {
         btnAtras.layer.cornerRadius = btnAtras.frame.height / 2
         btnAtras.layer.masksToBounds = true
     }
+    
+    //Volver a la lista de paises
+    @IBAction func btnAtrasTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func btnSiguienteTapped(_ sender: UIButton) {
+        guard let country = countryName else { return }
+
+            // Guardar región seleccionada
+            UserDefaults.standard.set(country, forKey: "selectedCountry")
+
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let tabBar = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
+
+            tabBar.modalPresentationStyle = .fullScreen
+            self.present(tabBar, animated: true)
+    }
 }

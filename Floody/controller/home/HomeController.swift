@@ -7,6 +7,8 @@ class HomeController: UIViewController {
     @IBOutlet weak var scannedCountLabel: UILabel!
 
     private let scanner = BarcodeScannerService()
+    
+    private var selectedCountry: String = "Estados Unidos" // default
 
     private var scannedCount: Int = 0 {
         didSet {
@@ -18,6 +20,12 @@ class HomeController: UIViewController {
         super.viewDidLoad()
 
         scannedCount = 0
+        
+        if let savedCountry = UserDefaults.standard.string(forKey: "selectedCountry") {
+            selectedCountry = savedCountry
+        }
+
+        print("Región activa:", selectedCountry)
 
         #if targetEnvironment(simulator)
         startSimulatorMode()
@@ -28,7 +36,7 @@ class HomeController: UIViewController {
 
     // MARK: - Simulator Mode
     private func startSimulatorMode() {
-        let fakeCode = "5449000054227"
+        let fakeCode = "7751271021975"
         scannedCount += 1
         loadProduct(code: fakeCode)
     }
@@ -45,17 +53,22 @@ class HomeController: UIViewController {
 
     // MARK: - Product Loader
     private func loadProduct(code: String) {
-        ProductService.shared.fetchProduct(code: code) { product in
+        ProductService.shared.fetchProduct(
+            code: code,
+            country: selectedCountry
+        ) { product in
             guard let product = product else {
                 print("Product not found")
                 return
             }
 
             DispatchQueue.main.async {
+                print("Country:", self.selectedCountry)
                 print("Name:", product.name)
                 print("Brand:", product.brand)
                 print("Calories:", product.calories)
             }
         }
     }
+
 }

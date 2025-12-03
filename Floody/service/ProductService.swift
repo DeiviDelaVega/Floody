@@ -3,12 +3,38 @@ import Foundation
 final class ProductService {
 
     static let shared = ProductService()
-
     private init() {}
 
-    func fetchProduct(code: String, completion: @escaping (Product?) -> Void) {
+    func fetchProduct(
+        code: String,
+        country: String,
+        completion: @escaping (Product?) -> Void
+    ) {
 
-        let urlString = "https://world.openfoodfacts.org/api/v0/product/\(code).json"
+        let regionCode = CountryRegionMapper.map(country)
+        let regionURL = "https://\(regionCode).openfoodfacts.org/api/v0/product/\(code).json"
+
+        fetchFromURL(regionURL, code: code) { product in
+            if let product = product {
+                completion(product)
+            } else {
+                //Fallback automático a WORLD si no existe en la región
+                let worldURL = "https://world.openfoodfacts.org/api/v0/product/\(code).json"
+
+                self.fetchFromURL(worldURL, code: code) { fallbackProduct in
+                    completion(fallbackProduct)
+                }
+            }
+        }
+    }
+
+    // MARK: - Private helper
+    private func fetchFromURL(
+        _ urlString: String,
+        code: String,
+        completion: @escaping (Product?) -> Void
+    ) {
+
         guard let url = URL(string: urlString) else {
             completion(nil)
             return
