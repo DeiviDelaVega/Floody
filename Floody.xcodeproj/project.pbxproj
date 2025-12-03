@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7C9F3DF12EDFF7E500E35867 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9F3DF02EDFF7E500E35867 /* FirebaseAuth */; };
+		7C9F3DF42EDFF89000E35867 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9F3DF32EDFF89000E35867 /* GoogleSignIn */; };
+		7C9F3DF72EDFF91B00E35867 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9F3DF62EDFF91B00E35867 /* AppAuth */; };
+		7CC507322EE0165800B8C18A /* MSAL in Frameworks */ = {isa = PBXBuildFile; productRef = 7CC507312EE0165800B8C18A /* MSAL */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		47D3D95C2ED3E243009A2296 /* Floody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Floody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C9F3DF72EDFF91B00E35867 /* AppAuth in Frameworks */,
+				7CC507322EE0165800B8C18A /* MSAL in Frameworks */,
+				7C9F3DF12EDFF7E500E35867 /* FirebaseAuth in Frameworks */,
+				7C9F3DF42EDFF89000E35867 /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,10 @@
 			);
 			name = Floody;
 			packageProductDependencies = (
+				7C9F3DF02EDFF7E500E35867 /* FirebaseAuth */,
+				7C9F3DF32EDFF89000E35867 /* GoogleSignIn */,
+				7C9F3DF62EDFF91B00E35867 /* AppAuth */,
+				7CC507312EE0165800B8C18A /* MSAL */,
 			);
 			productName = Floody;
 			productReference = 47D3D95C2ED3E243009A2296 /* Floody.app */;
@@ -107,6 +122,12 @@
 			);
 			mainGroup = 47D3D9532ED3E243009A2296;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7C9F3DEF2EDFF7E500E35867 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7C9F3DF22EDFF89000E35867 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				7C9F3DF52EDFF91B00E35867 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */,
+				7CC507302EE0165800B8C18A /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 47D3D95D2ED3E243009A2296 /* Products */;
 			projectDirPath = "";
@@ -147,6 +168,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Floody/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usamos la cámara para escanear códigos de barras de productos\n";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -178,6 +200,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Floody/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Usamos la cámara para escanear códigos de barras de productos\n";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -341,6 +364,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7C9F3DEF2EDFF7E500E35867 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+		7C9F3DF22EDFF89000E35867 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		7C9F3DF52EDFF91B00E35867 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/openid/AppAuth-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		7CC507302EE0165800B8C18A /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AzureAD/microsoft-authentication-library-for-objc";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7C9F3DF02EDFF7E500E35867 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C9F3DEF2EDFF7E500E35867 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7C9F3DF32EDFF89000E35867 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C9F3DF22EDFF89000E35867 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		7C9F3DF62EDFF91B00E35867 /* AppAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C9F3DF52EDFF91B00E35867 /* XCRemoteSwiftPackageReference "AppAuth-iOS" */;
+			productName = AppAuth;
+		};
+		7CC507312EE0165800B8C18A /* MSAL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CC507302EE0165800B8C18A /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */;
+			productName = MSAL;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47D3D9542ED3E243009A2296 /* Project object */;
 }

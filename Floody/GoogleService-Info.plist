@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>280048072630-diffr5dm53mbi87jksevl5b1fd0obec7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.280048072630-diffr5dm53mbi87jksevl5b1fd0obec7</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCkgvrnIIZ1cjvyLotSDuK0LtNtM8sorK8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>280048072630</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>floody.com.Floody</string>
+	<key>PROJECT_ID</key>
+	<string>foodly-ios-3e008</string>
+	<key>STORAGE_BUCKET</key>
+	<string>foodly-ios-3e008.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:280048072630:ios:0b9e68aae0e611b49db317</string>
+</dict>
+</plist>
