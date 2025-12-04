@@ -6,12 +6,12 @@ final class BarcodeScannerService: NSObject, AVCaptureMetadataOutputObjectsDeleg
     private let session = AVCaptureSession()
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var onCodeDetected: ((String) -> Void)?
+    private var isProcessing = false
 
     func start(
         in view: UIView,
         onDetected: @escaping (String) -> Void
     ) {
-
         self.onCodeDetected = onDetected
 
         guard
@@ -19,6 +19,16 @@ final class BarcodeScannerService: NSObject, AVCaptureMetadataOutputObjectsDeleg
             let input = try? AVCaptureDeviceInput(device: device),
             session.canAddInput(input)
         else { return }
+
+        // Autofocus
+        try? device.lockForConfiguration()
+        if device.isFocusModeSupported(.continuousAutoFocus) {
+            device.focusMode = .continuousAutoFocus
+        }
+        if device.isExposureModeSupported(.continuousAutoExposure) {
+            device.exposureMode = .continuousAutoExposure
+        }
+        device.unlockForConfiguration()
 
         session.addInput(input)
 
@@ -50,12 +60,19 @@ final class BarcodeScannerService: NSObject, AVCaptureMetadataOutputObjectsDeleg
         from connection: AVCaptureConnection
     ) {
 
+        guard !isProcessing else { return }
+
         guard
             let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
             let code = object.stringValue
         else { return }
 
-        stop()
+        isProcessing = true
         onCodeDetected?(code)
+
+        // Cooldown de 1 segundo para permitir nuevo escaneo
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.isProcessing = false
+        }
     }
 }
