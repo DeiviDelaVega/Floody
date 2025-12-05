@@ -54,15 +54,36 @@ final class ProductService {
 
             let name = productData["product_name"] as? String ?? "-"
             let brand = productData["brands"] as? String ?? "-"
+            let countries = productData["countries"] as? String ?? "Mundial"
+            let imageURL = productData["image_url"] as? String ?? "no_image"
+
 
             let nutriments = productData["nutriments"] as? [String: Any]
             let calories = nutriments?["energy-kcal_100g"].map { "\($0)" } ?? "-"
+            let sugar = nutriments?["sugars_100g"].map { "\($0) g" } ?? "-"
+            let carbs = nutriments?["carbohydrates_100g"].map { "\($0) g" } ?? "-"
+            let proteins = nutriments?["proteins_100g"].map { "\($0) g" } ?? "-"
+            let fat = nutriments?["fat_100g"].map { "\($0) g" } ?? "-"
+            let satFat = nutriments?["satured_fat_100g"].map { "\($0) g" } ?? "-"
+            let sodium = nutriments?["sodium_100g"].map { "\($0) g" } ?? "-"
+            let ingredientsText = (productData["ingredients_text"] as? String ?? "").lowercased()
+            let hasGluten = ingredientsText.contains("gluten") || ingredientsText.contains("trigo") ? "Contiene Gluten" : "Sin Gluten detectado"
+
 
             let product = Product(
                 code: code,
                 name: name,
+                countries: countries,
+                imageName: imageURL,
                 brand: brand,
-                calories: calories
+                calories: calories,
+                sugar: sugar,
+                carbohydrates: carbs,
+                proteins: proteins,
+                totalFat: fat,
+                saturatedFat: satFat,
+                sodium: sodium,
+                hasGluten: hasGluten
             )
 
             completion(product)

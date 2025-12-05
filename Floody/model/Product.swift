@@ -7,5 +7,15 @@ struct Product {
     var imageName: String = "no_image"
     var brand: String = "Sin marca"
     var calories: String = "-"
+    var sugar: String = "-"
+    var carbohydrates: String = "-"
+    var proteins: String = "-"
+    var totalFat: String = "-"
+    var saturatedFat: String = "-"
+    var sodium: String = "-"
+    var hasGluten: String = "Desconocido"
+
+    
+    
 }
 

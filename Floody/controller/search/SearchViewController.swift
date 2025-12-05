@@ -28,6 +28,20 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
               return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        tableView.deselectRow(at: indexPath, animated: true)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let detailVC = storyboard.instantiateViewController(withIdentifier: "ProductDetailController") as? ProductDetailController {
+            detailVC.productCodeToFetch = "8410111211202"
+            detailVC.modalPresentationStyle = .fullScreen
+            self.present(detailVC, animated: true)
+
+        }
+
+    }
+    
     @IBOutlet weak var tableProduct: UITableView!
     
     var products: [Product] = [
