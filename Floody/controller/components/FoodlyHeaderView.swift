@@ -13,11 +13,8 @@ class FoodlyHeaderView: UIView {
         super.init(coder: coder)
         setupUI()
     }
-
     private func setupUI() {
-        // Fondo verde
         backgroundColor = UIColor(red: 167/255, green: 214/255, blue: 90/255, alpha: 1)
-
         // Logo
         logoImageView.image = UIImage(named: "logoFoodly")
         logoImageView.contentMode = .scaleAspectFit
@@ -32,7 +29,6 @@ class FoodlyHeaderView: UIView {
             logoImageView.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = 30
