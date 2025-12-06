@@ -1,10 +1,3 @@
-//
-//  ProductCell.swift
-//  Floody
-//
-//  Created by David Barbaran on 29/11/25.
-//
-
 import UIKit
 
 class ProductCell: UITableViewCell {
@@ -21,7 +14,6 @@ class ProductCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 
