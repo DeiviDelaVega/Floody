@@ -11,6 +11,7 @@
 		7C9F3DF42EDFF89000E35867 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9F3DF32EDFF89000E35867 /* GoogleSignIn */; };
 		7C9F3DF72EDFF91B00E35867 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9F3DF62EDFF91B00E35867 /* AppAuth */; };
 		7CC507322EE0165800B8C18A /* MSAL in Frameworks */ = {isa = PBXBuildFile; productRef = 7CC507312EE0165800B8C18A /* MSAL */; };
+		EF90A43D2EE3985C00A61DAA /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF90A43D2EE3985C00A61DAA /* FirebaseDatabase in Frameworks */,
 				7C9F3DF72EDFF91B00E35867 /* AppAuth in Frameworks */,
 				7CC507322EE0165800B8C18A /* MSAL in Frameworks */,
 				7C9F3DF12EDFF7E500E35867 /* FirebaseAuth in Frameworks */,
@@ -93,6 +95,7 @@
 				7C9F3DF32EDFF89000E35867 /* GoogleSignIn */,
 				7C9F3DF62EDFF91B00E35867 /* AppAuth */,
 				7CC507312EE0165800B8C18A /* MSAL */,
+				EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */,
 			);
 			productName = Floody;
 			productReference = 47D3D95C2ED3E243009A2296 /* Floody.app */;
@@ -420,6 +423,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7CC507302EE0165800B8C18A /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */;
 			productName = MSAL;
+		};
+		EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C9F3DEF2EDFF7E500E35867 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
