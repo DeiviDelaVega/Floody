@@ -12,6 +12,7 @@
 		7C9F3DF72EDFF91B00E35867 /* AppAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7C9F3DF62EDFF91B00E35867 /* AppAuth */; };
 		7CC507322EE0165800B8C18A /* MSAL in Frameworks */ = {isa = PBXBuildFile; productRef = 7CC507312EE0165800B8C18A /* MSAL */; };
 		7CD3E7412EE3C39F001FEAE9 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7CD3E7402EE3C39F001FEAE9 /* Lottie */; };
+		EF90A43D2EE3985C00A61DAA /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CD3E7412EE3C39F001FEAE9 /* Lottie in Frameworks */,
+				EF90A43D2EE3985C00A61DAA /* FirebaseDatabase in Frameworks */,
 				7C9F3DF72EDFF91B00E35867 /* AppAuth in Frameworks */,
 				7CC507322EE0165800B8C18A /* MSAL in Frameworks */,
 				7C9F3DF12EDFF7E500E35867 /* FirebaseAuth in Frameworks */,
@@ -96,6 +98,7 @@
 				7C9F3DF62EDFF91B00E35867 /* AppAuth */,
 				7CC507312EE0165800B8C18A /* MSAL */,
 				7CD3E7402EE3C39F001FEAE9 /* Lottie */,
+				EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */,
 			);
 			productName = Floody;
 			productReference = 47D3D95C2ED3E243009A2296 /* Floody.app */;
@@ -437,6 +440,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7CD3E73F2EE3C39F001FEAE9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C9F3DEF2EDFF7E500E35867 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
