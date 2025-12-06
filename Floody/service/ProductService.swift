@@ -90,4 +90,55 @@ final class ProductService {
 
         }.resume()
     }
+    
+    // MARK: - SearchProduct
+   
+        func searchProducts(
+            query: String,
+            page: Int,
+            tipo: TipoFiltro,
+            completion: @escaping ([ProductAPI]) -> Void
+        ) {
+
+            let queryEncoded =
+                query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+
+            var urlString: String
+
+            switch tipo {
+
+            case .alimentos:
+                urlString =
+                "https://world.openfoodfacts.org/cgi/search.pl?search_terms=\(queryEncoded)&search_simple=1&action=process&json=1&page=\(page)&page_size=10"
+
+            case .animales:
+                let categoria = "en:pet-food"
+                urlString =
+                "https://world.openfoodfacts.org/cgi/search.pl?search_terms=\(queryEncoded)&tagtype_0=categories&tag_contains_0=contains&tag_0=\(categoria)&search_simple=1&action=process&json=1&page=\(page)&page_size=10"
+            }
+
+            print("URL FINAL ➜", urlString)
+
+            guard let url = URL(string: urlString) else {
+                completion([])
+                return
+            }
+
+            URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion([])
+                    return
+                }
+
+                do {
+                    let result = try JSONDecoder().decode(ProductSearchResult.self, from: data)
+                    completion(result.products)
+                } catch {
+                    print("❌ Error decoding:", error)
+                    completion([])
+                }
+            }.resume()
+        }
 }
+
+

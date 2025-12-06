@@ -564,67 +564,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zb5-Zn-UFI" customClass="FoodlyHeaderView" customModule="Floody" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="143"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zb5-Zn-UFI" customClass="FoodlyHeaderView" customModule="Floody" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="402" height="149"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="149" id="PY3-AO-Yvu"/>
+                                    <constraint firstAttribute="width" constant="402" id="XGm-TM-mVi"/>
+                                </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="¡ENCUENTRA UN PRODUCTO!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8Y-TI-QMn">
-                                <rect key="frame" x="0.0" y="167" width="393" height="78.666666666666686"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¡ENCUENTRA UN PRODUCTO!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8Y-TI-QMn">
+                                <rect key="frame" x="58" y="157" width="277" height="78.666666666666686"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="Ybj-8v-fLd"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Poppins-ExtraBold" family="Poppins" pointSize="28"/>
                                 <color key="textColor" name="mediumGray"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BaK-QF-3vd">
-                                <rect key="frame" x="25" y="250.66666666666663" width="342" height="57"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XS5-jt-fNv">
-                                        <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" name="darkGreen"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="" imagePadding="0.0" buttonSize="large">
-                                            <imageReference key="image" image="search_ic" symbolScale="large"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
-                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                    </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BUSCAR PRODUCTO" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qYh-v6-w6o">
-                                        <rect key="frame" x="63" y="11.000000000000028" width="204" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" name="lightGreen"/>
-                                        <fontDescription key="fontDescription" name="FONTSPRINGDEMO-TorusProBold" family="FONTSPRING DEMO - Torus Pro" pointSize="25"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHp-qV-g9U">
-                                        <rect key="frame" x="287" y="0.0" width="55" height="55"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" name="lightGreen"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="" imagePadding="0.0">
-                                            <imageReference key="image" image="sort_ic" symbolScale="large"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
-                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </buttonConfiguration>
-                                        <connections>
-                                            <action selector="filtroTapped:" destination="23C-ik-yTy" eventType="touchUpInside" id="0Q6-k4-nDA"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" name="lightGreen"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="27"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ddn-Rg-jlP">
-                                <rect key="frame" x="25" y="331" width="341" height="316"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ddn-Rg-jlP">
+                                <rect key="frame" x="26" y="304" width="341" height="336"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="316" id="KKQ-gy-VsZ"/>
+                                    <constraint firstAttribute="width" constant="341" id="lnQ-v9-JTu"/>
+                                </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="productRow" rowHeight="78" id="VAi-wL-Lk8" customClass="ProductCell" customModule="Floody" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="341" height="78"/>
@@ -637,25 +600,18 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="341" height="70"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="atun_img" translatesAutoresizingMaskIntoConstraints="NO" id="PYr-vG-PWK">
-                                                            <rect key="frame" x="8" y="9" width="95" height="55"/>
+                                                            <rect key="frame" x="8" y="8" width="89" height="55"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NOMBRE DE PRODUCTO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEZ-10-3rt">
-                                                            <rect key="frame" x="101" y="15" width="138" height="15.666666666666629"/>
+                                                            <rect key="frame" x="101" y="12" width="170" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="FONTSPRINGDEMO-TorusProBold" family="FONTSPRING DEMO - Torus Pro" pointSize="13"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Paises de venta:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QU4-p0-P1V">
-                                                            <rect key="frame" x="101" y="30" width="148" height="13"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name="FONTSPRINGDEMO-TorusProBold" family="FONTSPRING DEMO - Torus Pro" pointSize="11"/>
+                                                            <fontDescription key="fontDescription" name="FONTSPRINGDEMO-TorusProBold" family="FONTSPRING DEMO - Torus Pro" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPg-Qy-ntt">
-                                                            <rect key="frame" x="257" y="0.0" width="84" height="70"/>
+                                                            <rect key="frame" x="296" y="17" width="37" height="36"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="tintColor" name="lightGray"/>
                                                             <state key="normal" title="Button"/>
@@ -666,6 +622,13 @@
                                                                 <color key="baseBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </buttonConfiguration>
                                                         </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Paises de venta:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QU4-p0-P1V">
+                                                            <rect key="frame" x="101" y="35" width="187" height="23"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" name="FONTSPRINGDEMO-TorusProBold" family="FONTSPRING DEMO - Torus Pro" pointSize="11"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" name="lightGray"/>
                                                     <constraints>
@@ -697,9 +660,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcy-S0-S1e">
-                                <rect key="frame" x="26" y="666" width="341" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcy-S0-S1e">
+                                <rect key="frame" x="26" y="657" width="341" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="341" id="4Lv-qJ-bwc"/>
+                                    <constraint firstAttribute="height" constant="37" id="JST-Bu-bG6"/>
+                                </constraints>
                                 <color key="tintColor" name="lightGreen"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="VER MAS">
@@ -710,21 +676,132 @@
                                     <action selector="verMasTapped:" destination="23C-ik-yTy" eventType="touchUpInside" id="JZG-ya-yjb"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BaK-QF-3vd">
+                                <rect key="frame" x="25" y="250.66666666666663" width="342" height="57"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XS5-jt-fNv">
+                                        <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" name="darkGreen"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="" imagePadding="0.0" buttonSize="large">
+                                            <imageReference key="image" image="search_ic" symbolScale="large"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="btnLupa:" destination="23C-ik-yTy" eventType="touchUpInside" id="fmz-Pe-UU0"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="BUSCAR PRODUCTO" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qYh-v6-w6o">
+                                        <rect key="frame" x="63" y="11.000000000000028" width="204" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" name="lightGreen"/>
+                                        <fontDescription key="fontDescription" name="FONTSPRINGDEMO-TorusProBold" family="FONTSPRING DEMO - Torus Pro" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHp-qV-g9U">
+                                        <rect key="frame" x="287" y="0.0" width="55" height="55"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="tintColor" name="lightGreen"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="" imagePadding="0.0">
+                                            <imageReference key="image" image="sort_ic" symbolScale="large"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                            <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="filtroTapped:" destination="23C-ik-yTy" eventType="touchUpInside" id="0Q6-k4-nDA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="lightGreen"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="342" id="iWB-6h-t9h"/>
+                                    <constraint firstAttribute="height" constant="57" id="tFo-WX-pmg"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="27"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dIa-Yw-Ihz">
+                                <rect key="frame" x="25" y="328" width="342" height="389"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PQA-z8-J94">
+                                        <rect key="frame" x="51" y="50" width="240" height="177"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="177" id="81i-9P-45t"/>
+                                            <constraint firstAttribute="width" constant="240" id="wqX-DJ-kKZ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CARGANDO BÚSQUEDA..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWb-pN-S7U">
+                                        <rect key="frame" x="28" y="281" width="286" height="79"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="286" id="2Tt-Ya-1Ic"/>
+                                            <constraint firstAttribute="height" constant="79" id="ETS-dy-Mhp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Poppins-ExtraBold" family="Poppins" pointSize="28"/>
+                                        <color key="textColor" name="mediumGray"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="lightGray"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="MWb-pN-S7U" secondAttribute="trailing" constant="28" id="8Vp-35-0nH"/>
+                                    <constraint firstItem="MWb-pN-S7U" firstAttribute="top" secondItem="PQA-z8-J94" secondAttribute="bottom" constant="54" id="A20-fv-Nt8"/>
+                                    <constraint firstAttribute="width" constant="342" id="AXN-d0-Iys"/>
+                                    <constraint firstItem="PQA-z8-J94" firstAttribute="top" secondItem="dIa-Yw-Ihz" secondAttribute="top" constant="50" id="SCu-HF-ksG"/>
+                                    <constraint firstItem="PQA-z8-J94" firstAttribute="leading" secondItem="dIa-Yw-Ihz" secondAttribute="leading" constant="51" id="bWi-up-35w"/>
+                                    <constraint firstAttribute="trailing" secondItem="PQA-z8-J94" secondAttribute="trailing" constant="51" id="bcX-px-7gd"/>
+                                    <constraint firstItem="MWb-pN-S7U" firstAttribute="leading" secondItem="dIa-Yw-Ihz" secondAttribute="leading" constant="28" id="j17-KZ-YI6"/>
+                                    <constraint firstAttribute="height" constant="389" id="xXw-cs-PsH"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xC8-Sy-430"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="BaK-QF-3vd" firstAttribute="top" secondItem="K8Y-TI-QMn" secondAttribute="bottom" constant="15" id="1Ao-Xu-i0i"/>
+                            <constraint firstItem="Ddn-Rg-jlP" firstAttribute="leading" secondItem="xC8-Sy-430" secondAttribute="leading" constant="25" id="5VD-nk-7Gi"/>
+                            <constraint firstItem="zb5-Zn-UFI" firstAttribute="top" secondItem="ecz-3L-lXi" secondAttribute="top" id="9mf-BZ-WPR"/>
+                            <constraint firstItem="Ddn-Rg-jlP" firstAttribute="top" secondItem="BaK-QF-3vd" secondAttribute="bottom" constant="23.329999999999998" id="IVt-vz-baN"/>
+                            <constraint firstItem="Hcy-S0-S1e" firstAttribute="top" secondItem="Ddn-Rg-jlP" secondAttribute="bottom" constant="25" id="R5u-FM-WwL"/>
+                            <constraint firstItem="Hcy-S0-S1e" firstAttribute="leading" secondItem="xC8-Sy-430" secondAttribute="leading" constant="25" id="RJK-dU-Z6q"/>
+                            <constraint firstItem="BaK-QF-3vd" firstAttribute="leading" secondItem="xC8-Sy-430" secondAttribute="leading" constant="25" id="RNu-fz-bb2"/>
+                            <constraint firstItem="xC8-Sy-430" firstAttribute="trailing" secondItem="Hcy-S0-S1e" secondAttribute="trailing" constant="27" id="VDE-L9-RVP"/>
+                            <constraint firstItem="dIa-Yw-Ihz" firstAttribute="leading" secondItem="xC8-Sy-430" secondAttribute="leading" constant="25" id="Ywa-KZ-Fga"/>
+                            <constraint firstItem="xC8-Sy-430" firstAttribute="trailing" secondItem="K8Y-TI-QMn" secondAttribute="trailing" constant="58" id="arT-FT-IN7"/>
+                            <constraint firstItem="K8Y-TI-QMn" firstAttribute="top" secondItem="zb5-Zn-UFI" secondAttribute="bottom" constant="8" symbolic="YES" id="eLT-A6-zup"/>
+                            <constraint firstItem="dIa-Yw-Ihz" firstAttribute="top" secondItem="BaK-QF-3vd" secondAttribute="bottom" constant="20.329999999999998" id="eQK-nH-WiL"/>
+                            <constraint firstItem="xC8-Sy-430" firstAttribute="trailing" secondItem="BaK-QF-3vd" secondAttribute="trailing" constant="26" id="fZs-Py-mva"/>
+                            <constraint firstItem="xC8-Sy-430" firstAttribute="trailing" secondItem="dIa-Yw-Ihz" secondAttribute="trailing" constant="26" id="h80-i6-hDM"/>
+                            <constraint firstItem="K8Y-TI-QMn" firstAttribute="leading" secondItem="xC8-Sy-430" secondAttribute="leading" constant="58" id="pgV-nu-vh1"/>
+                            <constraint firstItem="xC8-Sy-430" firstAttribute="trailing" secondItem="Ddn-Rg-jlP" secondAttribute="trailing" constant="27" id="yXy-Io-XfC"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Buscar" image="search_ic" selectedImage="search_ic" id="vEQ-Nw-rM5">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="LcX-uz-D3X"/>
                     <connections>
+                        <outlet property="ivEstado" destination="PQA-z8-J94" id="vuy-4u-z8q"/>
+                        <outlet property="lblEstado" destination="MWb-pN-S7U" id="8DK-VK-7I1"/>
+                        <outlet property="lblSearch" destination="qYh-v6-w6o" id="Kcm-s4-rMi"/>
                         <outlet property="tableProduct" destination="Ddn-Rg-jlP" id="vpx-TO-dUi"/>
+                        <outlet property="uvEstado" destination="dIa-Yw-Ihz" id="O6B-Ba-5jv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w0m-YD-zAu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4247" y="-252"/>
+            <point key="canvasLocation" x="4246.5648854961828" y="-252.11267605633805"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="DFq-sc-Mk2">
@@ -1519,7 +1596,7 @@
                                 </constraints>
                                 <color key="tintColor" red="0.76120786620000003" green="0.14613644079999999" blue="0.84258943799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="OUTLOOK">
+                                <buttonConfiguration key="configuration" style="filled" title="FACEBOOK">
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="baseBackgroundColor" red="0.76120786620000003" green="0.14613644079999999" blue="0.84258943799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>

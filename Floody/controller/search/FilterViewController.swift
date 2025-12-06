@@ -1,17 +1,15 @@
-//
-//  FilterViewController.swift
-//  Floody
-//
-//  Created by David Barbaran on 30/11/25.
-//
-
 import UIKit
+
+protocol FilterDelegate: AnyObject{
+    func didSelectFilter(_ tipo: TipoFiltro)
+}
 
 class FilterViewController: UIViewController {
     
-    
     @IBOutlet weak var radioAlimentoBtn: UIButton!
     @IBOutlet weak var radioAnimalesBtn: UIButton!
+    
+    weak var delegate: FilterDelegate?
     
     var selectedTipo : TipoFiltro = .alimentos
     
@@ -20,13 +18,13 @@ class FilterViewController: UIViewController {
         setupUI()
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
     }
-  
+
     private func setupUI() {
         radioAlimentoBtn.tintColor = UIColor(named: "lightGreen")
         radioAnimalesBtn.tintColor = UIColor(named: "lightGreen")
         updateRadioUI()
     }
-    
+
     @IBAction func radioAlimentTapped(_ sender: UIButton) {
         selectedTipo = .alimentos
         updateRadioUI()
@@ -53,6 +51,7 @@ class FilterViewController: UIViewController {
         }
     
     @IBAction func cerrarFiltro(_ sender: UIButton) {
+        delegate?.didSelectFilter(selectedTipo)
         dismiss(animated: true)
     }
 }

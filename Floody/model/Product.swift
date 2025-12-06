@@ -14,8 +14,5 @@ struct Product {
     var saturatedFat: String = "-"
     var sodium: String = "-"
     var hasGluten: String = "Desconocido"
-
-    
-    
 }
 
