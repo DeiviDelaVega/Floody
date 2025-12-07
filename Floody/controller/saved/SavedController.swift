@@ -20,33 +20,41 @@ class SavedController: UIViewController,
         tvProductSaved.reloadData()
     }
     
-    func listado(){
+    func listado() {
         lista.append(Product(
             name: "Atún Campomar",
             countries: "Perú, Chile",
-            imageName: "atun_img"
+            imageName: "atun_img",
+            category: "Alimentos"
         ))
+        
         lista.append(Product(
             name: "Arroz Costeño",
             countries: "Perú",
-            imageName: "atun_img"
+            imageName: "arroz_img",
+            category: "Alimentos"
         ))
-        lista.append( Product(
+        
+        lista.append(Product(
             name: "Aceite Primor",
             countries: "Perú, Colombia",
-            imageName: "atun_img"
+            imageName: "aceite_img",
+            category: "Alimentos"
         ))
+        
         lista.append(Product(
             name: "Leche Gloria",
             countries: "Perú, Ecuador",
-            imageName: "atun_img"
+            imageName: "leche_img",
+            category: "Bebidas"
         ))
+        
         lista.append(Product(
             name: "Galletas Oreo",
             countries: "Perú, Argentina",
-            imageName: "atun_img"
-        )
-        )
+            imageName: "galletas_img",
+            category: "Alimentos"
+        ))
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
