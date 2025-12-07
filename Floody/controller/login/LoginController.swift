@@ -10,6 +10,14 @@ class LoginController: UIViewController {
         super.viewDidLoad()
     }
     
+    func goToCountryList() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CountryListController")
+
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+
     func signInWithGoogle() {
         // Obtiene ClientID de Fb
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -50,8 +58,8 @@ class LoginController: UIViewController {
                     print("Error Firebase Auth:", error.localizedDescription)
                     return
                 }
-
                 print("Usuario logueado:", authResult?.user.email ?? "sin email")
+                self.goToCountryList()
             }
         }
     }

@@ -1,14 +1,12 @@
-
 import UIKit
+import FirebaseAuth
 
 class ProductDetailController: UIViewController {
-
     @IBOutlet weak var imgProduct: UIImageView!
     
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblCategory: UILabel!
     @IBOutlet weak var lblQuantity: UILabel!
-    
     
     @IBOutlet weak var lblEnergy: UILabel!
     @IBOutlet weak var lblSugar: UILabel!
@@ -100,6 +98,22 @@ class ProductDetailController: UIViewController {
             }
         } else {
             self.imgProduct.image = UIImage(named: product.imageName)
+        }
+        
+        if let code = productCodeToFetch {
+            let imageURL = product.imageName.hasPrefix("http")
+            ? product.imageName
+            : ""
+            
+            let historyItem = ProductHistory(
+                barcode: code,
+                name: product.name,
+                imageUrl: imageURL,
+                category: product.category
+            )
+            
+            HistoryService.shared.saveToHistory(product: historyItem)
+            print("UID actual:", Auth.auth().currentUser?.uid ?? "NO HAY USER")
         }
     }
      

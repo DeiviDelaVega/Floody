@@ -61,7 +61,16 @@ class HomeController: UIViewController {
                 print("Product not found")
                 return
             }
-
+            
+            let historyItem = ProductHistory(
+                barcode: code,
+                name: product.name,
+                imageUrl: product.imageName,
+                category: product.category
+            )
+            
+            HistoryService.shared.saveToHistory(product: historyItem)
+            
             DispatchQueue.main.async {
                 print("Country:", self.selectedCountry)
                 print("Name:", product.name)
@@ -70,5 +79,4 @@ class HomeController: UIViewController {
             }
         }
     }
-
 }

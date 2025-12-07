@@ -440,7 +440,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7CD3E73F2EE3C39F001FEAE9 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
-        };
+		};
 		EF90A43C2EE3985C00A61DAA /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7C9F3DEF2EDFF7E500E35867 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
