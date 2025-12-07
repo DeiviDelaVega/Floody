@@ -1525,6 +1525,7 @@
                     <tabBarItem key="tabBarItem" title="Escanear" image="home" selectedImage="home" id="egP-BH-x8t"/>
                     <connections>
                         <outlet property="cameraPreviewView" destination="41G-Lu-sL6" id="1Ah-Zk-aax"/>
+                        <outlet property="savedCountLabel" destination="hA0-3I-vBF" id="hmo-aT-NTq"/>
                         <outlet property="scannedCountLabel" destination="6kW-Lq-0YT" id="pdU-qa-Z75"/>
                     </connections>
                 </viewController>

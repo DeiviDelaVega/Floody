@@ -5,7 +5,8 @@ class HomeController: UIViewController {
 
     @IBOutlet weak var cameraPreviewView: UIView!
     @IBOutlet weak var scannedCountLabel: UILabel!
-
+    @IBOutlet weak var savedCountLabel: UILabel!
+    
     private let scanner = BarcodeScannerService()
     
     private var selectedCountry: String = "Estados Unidos" // default
@@ -13,6 +14,12 @@ class HomeController: UIViewController {
     private var scannedCount: Int = 0 {
         didSet {
             scannedCountLabel.text = "\(scannedCount)"
+        }
+    }
+    
+    private var savedCount: Int = 0 {
+        didSet {
+            savedCountLabel.text = "\(savedCount)"
         }
     }
 
@@ -24,7 +31,8 @@ class HomeController: UIViewController {
         if let savedCountry = UserDefaults.standard.string(forKey: "selectedCountry") {
             selectedCountry = savedCountry
         }
-
+        listenSavedProducts()
+        
         print("Región activa:", selectedCountry)
 
         #if targetEnvironment(simulator)
@@ -76,6 +84,14 @@ class HomeController: UIViewController {
                 print("Name:", product.name)
                 print("Brand:", product.brand)
                 print("Calories:", product.calories)
+            }
+        }
+    }
+    
+    private func listenSavedProducts() {
+        SavedService.shared.fetchSavedProducts { [weak self] products in
+            DispatchQueue.main.async {
+                self?.savedCount = products.count
             }
         }
     }
