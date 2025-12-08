@@ -14,6 +14,11 @@ final class BarcodeScannerService: NSObject, AVCaptureMetadataOutputObjectsDeleg
     ) {
         self.onCodeDetected = onDetected
 
+        session.beginConfiguration()
+        session.inputs.forEach { session.removeInput($0) }
+        session.outputs.forEach { session.removeOutput($0) }
+        session.commitConfiguration()
+
         guard
             let device = AVCaptureDevice.default(for: .video),
             let input = try? AVCaptureDeviceInput(device: device),
@@ -39,6 +44,8 @@ final class BarcodeScannerService: NSObject, AVCaptureMetadataOutputObjectsDeleg
         output.setMetadataObjectsDelegate(self, queue: .main)
         output.metadataObjectTypes = [.ean13, .ean8, .upce, .qr]
 
+        previewLayer?.removeFromSuperlayer()
+
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer?.videoGravity = .resizeAspectFill
         previewLayer?.frame = view.bounds
@@ -47,8 +54,11 @@ final class BarcodeScannerService: NSObject, AVCaptureMetadataOutputObjectsDeleg
             view.layer.addSublayer(layer)
         }
 
-        session.startRunning()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.session.startRunning()
+        }
     }
+
 
     func stop() {
         session.stopRunning()

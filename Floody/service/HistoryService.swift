@@ -21,7 +21,7 @@ class HistoryService {
         let values: [String: Any] = [
             "name": product.name,
             "imageUrl": product.imageUrl,
-            "category": product.category
+            "category": product.category,
         ]
         
         ref.child(path).setValue(values)

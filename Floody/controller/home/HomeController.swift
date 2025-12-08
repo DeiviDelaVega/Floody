@@ -9,6 +9,8 @@ class HomeController: UIViewController {
     
     private let scanner = BarcodeScannerService()
     
+    private var isScannerRunning = false
+    
     private var selectedCountry: String = "Estados Unidos" // default
 
     private var scannedCount: Int = 0 {
@@ -25,13 +27,12 @@ class HomeController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        scannedCount = 0
         
         if let savedCountry = UserDefaults.standard.string(forKey: "selectedCountry") {
             selectedCountry = savedCountry
         }
         listenSavedProducts()
+        listenScannedProducts()
         
         print("Región activa:", selectedCountry)
 
@@ -41,6 +42,15 @@ class HomeController: UIViewController {
         startCameraMode()
         #endif
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        #if !targetEnvironment(simulator)
+        startCameraMode()
+        #endif
+    }
+
 
     // MARK: - Simulator Mode
     private func startSimulatorMode() {
@@ -51,10 +61,11 @@ class HomeController: UIViewController {
 
     // MARK: - Camera Mode
     private func startCameraMode() {
+        guard !isScannerRunning else { return }
+        isScannerRunning = true
+
         scanner.start(in: cameraPreviewView) { [weak self] code in
             guard let self = self else { return }
-
-            self.scannedCount += 1
             self.loadProduct(code: code)
         }
     }
@@ -64,26 +75,24 @@ class HomeController: UIViewController {
         ProductService.shared.fetchProduct(
             code: code,
             country: selectedCountry
-        ) { product in
-            guard let product = product else {
+        ) { [weak self] product in
+            guard let self = self, let product = product else {
                 print("Product not found")
                 return
             }
-            
-            let historyItem = ProductHistory(
-                barcode: code,
-                name: product.name,
-                imageUrl: product.imageName,
-                category: product.category
-            )
-            
-            HistoryService.shared.saveToHistory(product: historyItem)
-            
+
             DispatchQueue.main.async {
-                print("Country:", self.selectedCountry)
-                print("Name:", product.name)
-                print("Brand:", product.brand)
-                print("Calories:", product.calories)
+                self.scanner.stop()
+                self.isScannerRunning = false
+
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewController(
+                    withIdentifier: "ProductDetailController"
+                ) as! ProductDetailController
+                
+                vc.productCodeToFetch = code
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
             }
         }
     }
@@ -92,6 +101,15 @@ class HomeController: UIViewController {
         SavedService.shared.fetchSavedProducts { [weak self] products in
             DispatchQueue.main.async {
                 self?.savedCount = products.count
+            }
+        }
+    }
+    
+    private func listenScannedProducts() {
+        HistoryService.shared.fetchHistory { [weak self] products in
+            DispatchQueue.main.async {
+                self?.scannedCount = products.count
+                self?.scannedCountLabel.text = "\(products.count)"
             }
         }
     }
