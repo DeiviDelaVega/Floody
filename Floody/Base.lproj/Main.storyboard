@@ -346,6 +346,36 @@
                                 <color key="textColor" name="mediumGray"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="te8-Wc-bL5" userLabel="ViewMensajeBusqueda">
+                                <rect key="frame" x="24.333333333333343" y="344" width="342" height="368"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="historialBuscar" translatesAutoresizingMaskIntoConstraints="NO" id="Ls5-lP-QXo">
+                                        <rect key="frame" x="105" y="55" width="132" height="128"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="¡NO SE HAN ENCONTRADO RESULTADOS!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgW-2c-s1w">
+                                        <rect key="frame" x="34" y="185" width="275" height="139"/>
+                                        <fontDescription key="fontDescription" name="Poppins-ExtraBold" family="Poppins" pointSize="28"/>
+                                        <color key="textColor" name="mediumGray"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="lightGray"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ls5-lP-QXo" secondAttribute="trailing" constant="105" id="EzU-DZ-FcD"/>
+                                    <constraint firstAttribute="trailing" secondItem="PgW-2c-s1w" secondAttribute="trailing" constant="33" id="F4Y-op-kxn"/>
+                                    <constraint firstAttribute="bottom" secondItem="PgW-2c-s1w" secondAttribute="bottom" constant="44" id="KXL-xm-ZQm"/>
+                                    <constraint firstItem="PgW-2c-s1w" firstAttribute="top" secondItem="Ls5-lP-QXo" secondAttribute="bottom" constant="2" id="QR6-Tr-gPX"/>
+                                    <constraint firstItem="Ls5-lP-QXo" firstAttribute="top" secondItem="te8-Wc-bL5" secondAttribute="top" constant="55" id="YUj-Yl-Ad1"/>
+                                    <constraint firstItem="PgW-2c-s1w" firstAttribute="leading" secondItem="te8-Wc-bL5" secondAttribute="leading" constant="34" id="hVQ-LZ-c48"/>
+                                    <constraint firstItem="Ls5-lP-QXo" firstAttribute="leading" secondItem="te8-Wc-bL5" secondAttribute="leading" constant="105" id="pkL-Sc-qeh"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="28"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                             <view contentMode="center" id="36N-Ap-YWs" userLabel="ViewMensaje">
                                 <rect key="frame" x="24.333333333334167" y="344.00000000000409" width="342" height="368"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -386,6 +416,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="4KO-BD-Y20" firstAttribute="trailing" secondItem="4kt-qY-qfQ" secondAttribute="trailing" constant="26" id="4FZ-5y-RDV"/>
+                            <constraint firstItem="4KO-BD-Y20" firstAttribute="trailing" secondItem="te8-Wc-bL5" secondAttribute="trailing" constant="26.670000000000002" id="7LM-di-yrp"/>
                             <constraint firstItem="4KO-BD-Y20" firstAttribute="trailing" secondItem="zJn-hn-yX2" secondAttribute="trailing" constant="99" id="DGQ-6i-Cwf"/>
                             <constraint firstItem="4KO-BD-Y20" firstAttribute="trailing" secondItem="p7y-Hj-4fc" secondAttribute="trailing" constant="26" id="Eyb-B9-w5v"/>
                             <constraint firstItem="p7y-Hj-4fc" firstAttribute="leading" secondItem="4KO-BD-Y20" secondAttribute="leading" constant="25" id="Gq3-RV-mkx"/>
@@ -393,12 +424,15 @@
                             <constraint firstItem="rig-9i-deb" firstAttribute="top" secondItem="p7y-Hj-4fc" secondAttribute="bottom" constant="8" id="L3U-wo-tp0"/>
                             <constraint firstItem="p7y-Hj-4fc" firstAttribute="top" secondItem="zJn-hn-yX2" secondAttribute="bottom" constant="23.670000000000002" id="L8Y-Zm-PBp"/>
                             <constraint firstAttribute="bottom" secondItem="4kt-qY-qfQ" secondAttribute="bottom" constant="140" id="NG0-EU-qSi"/>
+                            <constraint firstItem="te8-Wc-bL5" firstAttribute="leading" secondItem="4KO-BD-Y20" secondAttribute="leading" constant="24.329999999999998" id="P0A-17-r84"/>
+                            <constraint firstItem="4KO-BD-Y20" firstAttribute="bottom" secondItem="te8-Wc-bL5" secondAttribute="bottom" constant="23" id="S3X-Nc-3bg"/>
                             <constraint firstItem="4kt-qY-qfQ" firstAttribute="leading" secondItem="4KO-BD-Y20" secondAttribute="leading" constant="25" id="ST0-17-rLR"/>
                             <constraint firstItem="36N-Ap-YWs" firstAttribute="top" secondItem="rig-9i-deb" secondAttribute="bottom" constant="25" id="XRH-lF-DI1"/>
                             <constraint firstItem="4KO-BD-Y20" firstAttribute="trailing" secondItem="rig-9i-deb" secondAttribute="trailing" constant="44" id="ZNS-Su-QaS"/>
                             <constraint firstItem="rig-9i-deb" firstAttribute="leading" secondItem="4KO-BD-Y20" secondAttribute="leading" constant="43" id="bTk-jG-YKy"/>
                             <constraint firstItem="HY6-xV-mLt" firstAttribute="top" secondItem="kzb-yD-6Pf" secondAttribute="top" id="cCw-Ag-gge"/>
                             <constraint firstItem="4kt-qY-qfQ" firstAttribute="top" secondItem="rig-9i-deb" secondAttribute="bottom" constant="13" id="cx5-F0-T8r"/>
+                            <constraint firstItem="te8-Wc-bL5" firstAttribute="top" secondItem="rig-9i-deb" secondAttribute="bottom" constant="25" id="gME-Bj-7gz"/>
                             <constraint firstItem="zJn-hn-yX2" firstAttribute="leading" secondItem="4KO-BD-Y20" secondAttribute="leading" constant="99" id="gSk-ct-gz5"/>
                             <constraint firstItem="HY6-xV-mLt" firstAttribute="leading" secondItem="4KO-BD-Y20" secondAttribute="leading" id="owl-Rh-Cne"/>
                             <constraint firstItem="HY6-xV-mLt" firstAttribute="trailing" secondItem="4KO-BD-Y20" secondAttribute="trailing" id="rs2-zX-Afi"/>
@@ -410,6 +444,7 @@
                         <outlet property="tvProducto" destination="4kt-qY-qfQ" id="AuH-iP-5kQ"/>
                         <outlet property="txtNombreProducto" destination="rCy-rL-Z6c" id="026-98-FKQ"/>
                         <outlet property="viewEmptyState" destination="36N-Ap-YWs" id="GTp-0G-rmP"/>
+                        <outlet property="viewNoResults" destination="te8-Wc-bL5" id="OTm-nb-h4w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tv3-zt-87b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1758,6 +1793,7 @@
         <image name="guardados" width="43" height="44"/>
         <image name="historial" width="32" height="33"/>
         <image name="historial2" width="132" height="132"/>
+        <image name="historialBuscar" width="128" height="128"/>
         <image name="home" width="32" height="32"/>
         <image name="logoFoodly" width="373" height="136"/>
         <image name="manzana" width="158" height="158"/>
