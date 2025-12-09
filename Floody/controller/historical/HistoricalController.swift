@@ -7,32 +7,65 @@ class HistoricalController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tvProducto: UITableView!
     @IBOutlet weak var txtNombreProducto: UITextField!
     @IBOutlet weak var viewEmptyState: UIView!
+    @IBOutlet weak var viewNoResults: UIView!
     
     private var items: [ProductHistory] = []
     private var filteredItems: [ProductHistory] = []
     private var sectionLetters: [String] = []
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        viewEmptyState.isHidden = true
+        viewNoResults.isHidden = true
+
         fontSegmentedControl()
         scCategoria.selectedSegmentIndex = 1
-        applyFilters()
-        
+
         tvProducto.dataSource = self
         tvProducto.delegate = self
         tvProducto.showsVerticalScrollIndicator = false
         tvProducto.backgroundColor = .white
-        
+
+        txtNombreProducto.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+
         loadHistory()
-        txtNombreProducto.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     
     // MARK: - Estado vacío para ver mensaje
     private func updateEmptyState() {
-        let isFilteredItemsEmpty = filteredItems.isEmpty
-        tvProducto.isHidden = isFilteredItemsEmpty
-        viewEmptyState.isHidden = !isFilteredItemsEmpty
+        let hasHistory = !items.isEmpty
+        let hasFiltered = !filteredItems.isEmpty
+        let isSearching = !(txtNombreProducto.text ?? "").trimmingCharacters(in: .whitespaces).isEmpty
+        
+        if !hasHistory {
+            tvProducto.isHidden = true
+            viewEmptyState.isHidden = false
+            viewNoResults.isHidden = true
+            return
+        }
+        
+        if hasHistory && !hasFiltered && isSearching {
+            tvProducto.isHidden = true
+            viewEmptyState.isHidden = true
+            viewNoResults.isHidden = false
+            return
+        }
+        
+        if hasHistory && !hasFiltered && !isSearching {
+            tvProducto.isHidden = true
+            viewEmptyState.isHidden = false
+            viewNoResults.isHidden = true
+            return
+        }
+        
+        tvProducto.isHidden = false
+        viewEmptyState.isHidden = true
+        viewNoResults.isHidden = true
     }
     
     // MARK: Filtro de segmented control y text field

@@ -12,11 +12,21 @@ class CountryListController: UIViewController, UITableViewDelegate, UITableViewD
         tvPais.dataSource = self
         tvPais.showsVerticalScrollIndicator = false
         
-        loadCountries()
+        loadCachedCountries()
+        loadCountriesFromAPI()
     }
     
-    private func loadCountries() {
+    private func loadCachedCountries() {
+        let cached = CountryCache.shared.load()
+        if !cached.isEmpty {
+            self.countries = cached
+            self.tvPais.reloadData()
+        }
+    }
+    
+    private func loadCountriesFromAPI() {
         OpenFoodFactsCountriesAPI.shared.fetchCountries { apiCountries in
+            
             let filtered = apiCountries.compactMap { name -> Country? in
                 guard Country.allowedCountries.contains(name),
                       let flagURL = FlagsService.shared.flagURL(for: name) else { return nil }
@@ -25,6 +35,7 @@ class CountryListController: UIViewController, UITableViewDelegate, UITableViewD
             
             DispatchQueue.main.async {
                 self.countries = filtered
+                CountryCache.shared.save(filtered)
                 self.tvPais.reloadData()
             }
         }
@@ -48,7 +59,6 @@ class CountryListController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let country = countries[indexPath.row]
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
         if let vc = storyboard.instantiateViewController(withIdentifier: "CountrySelectController") as? CountrySelectController {
             vc.countryName = country.translatedName
             vc.flagURL = country.flagURL
