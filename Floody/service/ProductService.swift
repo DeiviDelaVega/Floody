@@ -135,6 +135,7 @@ final class ProductService {
         query: String,
         page: Int,
         tipo: TipoFiltro,
+        country: String?,
         completion: @escaping ([ProductAPI]) -> Void
     ) {
         
@@ -143,16 +144,18 @@ final class ProductService {
         
         var urlString: String
         
+        let countryFilter = country != nil ? "&country=\(country!.lowercased())" : ""
+        
         switch tipo {
             
         case .alimentos:
             urlString =
-            "https://world.openfoodfacts.org/cgi/search.pl?search_terms=\(queryEncoded)&search_simple=1&action=process&json=1&page=\(page)&page_size=10"
+            "https://world.openfoodfacts.org/cgi/search.pl?search_terms=\(queryEncoded)&search_simple=1&action=process&json=1&page=\(page)&page_size=10\(countryFilter)"
             
         case .animales:
             let categoria = "en:pet-food"
             urlString =
-            "https://world.openfoodfacts.org/cgi/search.pl?search_terms=\(queryEncoded)&tagtype_0=categories&tag_contains_0=contains&tag_0=\(categoria)&search_simple=1&action=process&json=1&page=\(page)&page_size=10"
+            "https://world.openfoodfacts.org/cgi/search.pl?search_terms=\(queryEncoded)&tagtype_0=categories&tag_contains_0=contains&tag_0=\(categoria)&search_simple=1&action=process&json=1&page=\(page)&page_size=10\(countryFilter)"
         }
         
         print("URL FINAL ➜", urlString)
