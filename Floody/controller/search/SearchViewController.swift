@@ -6,9 +6,24 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var lblSearch: UITextField!
     @IBOutlet weak var tableProduct: UITableView!
     
+    // View Loading
     @IBOutlet weak var uvEstado: UIView!
     @IBOutlet weak var ivEstado: UIImageView!
     @IBOutlet weak var lblEstado: UILabel!
+    
+    @IBOutlet weak var viewLoading: UIView!
+    @IBOutlet weak var btnVerMas: UIButton!
+    
+    // View No Disponible
+    @IBOutlet weak var lblDisponibilidad: UILabel!
+    @IBOutlet weak var ivMundo: UIImageView!
+    @IBOutlet weak var btnVerPorMundo: UIButton!
+    @IBOutlet weak var viewDisponibilidad: UIView!
+    
+    var selectedCountry: String? {
+        return UserDefaults.standard.string(forKey: "selectedCountry")
+    }
+    var buscarEnTodoElMundo = false
     
     var selectedTipoFiltro: TipoFiltro = .alimentos
     
@@ -31,11 +46,21 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         lblSearch.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
         
+        viewDisponibilidad.isHidden = true
+        btnVerMas.isHidden = true
+        btnVerPorMundo.isHidden = true
+        
         mostrarEstadoInicial()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.view.bringSubviewToFront(uvEstado)
+    }
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if displayedProducts.isEmpty { return 1 }
+        if displayedProducts.isEmpty && mensajeTemporal !=  nil { return 1 }
         return displayedProducts.count
     }
     
@@ -64,6 +89,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         }
         return cell
     }
+    
+    // MARK: FUNCIONES
     
     func downloadImage(into imageView: UIImageView,
                        from url:URL)
@@ -96,18 +123,26 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     func mostrarEstadoInicial()
     {
+        mensajeTemporal = nil
+        displayedProducts.removeAll()
+        
         tableProduct.isHidden = true
         uvEstado.isHidden = false
+        ocultarNoDisponiblePais()
         
         lblEstado.text = "¡REALICE UNA BÚSQUEDA!"
         ivEstado.isHidden = false
+        
         loadingAnimation?.removeFromSuperview()
     }
     
     func mostrarEstadoCarga() {
         
+        mensajeTemporal = nil
+        
         tableProduct.isHidden = true
         uvEstado.isHidden = false
+        ocultarNoDisponiblePais()
         
         lblEstado.text = "CARGANDO BÚSQUEDA..."
         ivEstado.image = UIImage(named: "searchProd") //añadir
@@ -132,13 +167,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         loadingAnimation = animation
     }
     
-    
-    func mostrarResultado()
-    {
-        uvEstado.isHidden = true
-        tableProduct.isHidden = false
-    }
-    
     func ocultarEstadoCarga() {
         uvEstado.isHidden = true
         tableProduct.isHidden = false
@@ -148,12 +176,34 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         loadingAnimation = nil
     }
     
+    func mostrarResultado()
+    {
+        viewDisponibilidad.isHidden = true
+        uvEstado.isHidden = true
+        
+        tableProduct.isHidden = false
+        tableProduct.superview?.bringSubviewToFront(tableProduct)
+        
+        if displayedProducts.count >= 10 {
+            tableProduct.isHidden = false
+        } else {
+            btnVerMas.isHidden = true
+        }
+    }
+    
     func mostrarMensaje(_ mensaje: String)
     {
         mensajeTemporal = mensaje
         self.displayedProducts.removeAll()
+        
+        tableProduct.isHidden = false
+        uvEstado.isHidden = true
+        viewDisponibilidad.isHidden = true
+        
         tableProduct.reloadData()
-        mostrarResultado()
+        tableProduct.superview?.bringSubviewToFront(tableProduct)
+        
+        btnVerMas.isHidden = true
     }
     
     @objc func textDidChange()
@@ -170,28 +220,57 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    func mostrarNoDisponiblePais() {
+        tableProduct.isHidden = true
+        uvEstado.isHidden = true
+        btnVerMas.isHidden = true
+
+        viewDisponibilidad.isHidden = false
+        btnVerPorMundo.isHidden = false
+        
+        loadingAnimation?.stop()
+        loadingAnimation?.removeFromSuperview()
+        loadingAnimation = nil
+    }
+
+    func ocultarNoDisponiblePais() {
+        viewDisponibilidad.isHidden = true
+        btnVerMas.isHidden = false
+        btnVerPorMundo.isHidden = true
+    }
+    
     func buscarPro(nombre: String) {
+
+        let pais = buscarEnTodoElMundo ? nil : selectedCountry
 
         ProductService.shared.searchProducts(
             query: nombre,
             page: currentPage,
-            tipo: selectedTipoFiltro
+            tipo: selectedTipoFiltro,
+            country: pais
         ) { products in
 
             DispatchQueue.main.async {
 
-                self.ocultarEstadoCarga()
+                // ✅ RESETEAR AL TERMINAR LA BÚSQUEDA
+                let fueBusquedaGlobal = self.buscarEnTodoElMundo
+                self.buscarEnTodoElMundo = false
 
-                if self.currentPage == 1 && products.isEmpty {
+                // Caso1. No hay productos en este pais
+                if self.currentPage == 1 && products.isEmpty && !fueBusquedaGlobal {
+                    self.mostrarNoDisponiblePais()
+                    return
+                }
+
+                // Caso2. No hay producto en el mundo
+                if self.currentPage == 1 && products.isEmpty && fueBusquedaGlobal {
                     self.mostrarMensaje("Producto no encontrado")
-                    self.ocultarEstadoCarga()
+                    self.btnVerMas.isHidden = true
                     return
                 }
 
-                if products.isEmpty {
-                    print("No hay más productos")
-                    return
-                }
+                // Caso3. Si hay productos
+                self.ocultarEstadoCarga()
 
                 if self.currentPage == 1 {
                     self.displayedProducts = products
@@ -204,7 +283,17 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
     }
+    
+    func setEstadoNoDisponible() {
+        tableProduct.isHidden = true
+        uvEstado.isHidden = true
+        btnVerMas.isHidden = true
 
+        viewDisponibilidad.isHidden = false
+        btnVerPorMundo.isHidden = false
+    }
+
+    // MARK: Botones de la View
     
     @IBAction func verMasTapped(_ sender: UIButton) {
         guard !isLoadingMore else { return }
@@ -213,10 +302,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         isLoadingMore = true
         currentPage += 1
 
+        let pais = buscarEnTodoElMundo ? nil : selectedCountry
+
         ProductService.shared.searchProducts(
             query: currentQuery,
             page: currentPage,
-            tipo: selectedTipoFiltro
+            tipo: selectedTipoFiltro,
+            country: pais
         ) { products in
 
             DispatchQueue.main.async {
@@ -224,8 +316,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                 self.isLoadingMore = false
 
                 if products.isEmpty {
-                    print("No hay más productos")
+                    self.btnVerMas.isHidden = true
                     return
+                } else {
+                    self.btnVerMas.isHidden = false
                 }
 
                 self.displayedProducts += products
@@ -233,17 +327,20 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
     }
-
+    
     @IBAction func btnLupa(_ sender: UIButton) {
-            guard let text = lblSearch.text, !text.isEmpty else {
-                mostrarEstadoInicial()
-                return
-            }
+        guard let text = lblSearch.text, !text.isEmpty else {
+            mostrarEstadoInicial()
+            return
+        }
 
+        buscarEnTodoElMundo = false
+        
         currentQuery = text
         currentPage = 1
-        displayedProducts.removeAll()
+        
         mensajeTemporal = nil
+        displayedProducts.removeAll()
 
         tableProduct.reloadData()
         mostrarEstadoCarga()
@@ -258,6 +355,20 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             vc.delegate = self
             vc.selectedTipo = selectedTipoFiltro
             present(vc, animated: true)
+    }
+    
+    @IBAction func btnBuscarTodoMundo(_ sender: Any) {
+        guard let text = lblSearch.text, !text.isEmpty else { return }
+        
+        buscarEnTodoElMundo = true
+        currentQuery = text
+        currentPage = 1
+        
+        mensajeTemporal = nil
+        displayedProducts.removeAll()
+        
+        mostrarEstadoCarga()
+        buscarPro(nombre: text)
     }
     
 }
@@ -276,3 +387,4 @@ extension SearchViewController: FilterDelegate {
     }
 }
 
+// Original Taste – Coca-Cola – 1 l
