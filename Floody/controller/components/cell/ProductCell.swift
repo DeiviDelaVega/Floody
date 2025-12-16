@@ -7,35 +7,36 @@ class ProductCell: UITableViewCell {
     @IBOutlet weak var countriesLabel: UILabel!
     @IBOutlet weak var favoriteBtn: UIButton!
     
-    private var currentProduct: Product?
+    var onFavoriteTapped: (() -> Void)?
+    var imageURL:String? 
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+            print("✅ ProductCell cargada")
+            print("➡️ imageView frame:", productImageView.frame)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        productImageView.image = UIImage(named: "atun_img")
+        imageURL = nil
+    }
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
     
     func updateSaveButtonIcon(isSaved: Bool) {
-        let iconName = isSaved ? "bookmark.fill" : "bookmark"
-        let image = UIImage(systemName: iconName)
+        let iconName = isSaved ? "btnSavedComplete" : "wishlist"
+        let image = UIImage(named: iconName)
         DispatchQueue.main.async {
             self.favoriteBtn.setImage(image, for: .normal)
             self.favoriteBtn.tintColor = isSaved ? .systemYellow : .darkGray
         }
     }
      
-    /*
-    @IBAction func btnSaved(_ sender: UIButton) {
-        guard let product = currentProduct else { return }
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-            
-        SavedService.shared.toggleSavedProduct(product: product) {
-            [weak self] isNowSaved in
-            self?.updateSaveButtonIcon(isSaved: isNowSaved)
-        }
-    }*/
+    @IBAction func btnFavorite(_ sender: UIButton) {
+        onFavoriteTapped?()
+    }
 }

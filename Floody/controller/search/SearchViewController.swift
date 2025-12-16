@@ -3,6 +3,7 @@ import Lottie
 
 class SearchViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    // MARK: ELEMENTOS
     @IBOutlet weak var lblSearch: UITextField!
     @IBOutlet weak var tableProduct: UITableView!
     
@@ -20,6 +21,10 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var btnVerPorMundo: UIButton!
     @IBOutlet weak var viewDisponibilidad: UIView!
     
+    // Rendimiento de carga
+    private let imageCache = NSCache<NSString, UIImage>()
+    private var savedCache = Set<String>()
+
     var selectedCountry: String? {
         return UserDefaults.standard.string(forKey: "selectedCountry")
     }
@@ -33,13 +38,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     
     var currentPage: Int = 1
     var currentQuery: String = ""
-    
     var mensajeTemporal:String? = nil
     var isLoadingMore = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableProduct.dataSource = self
         tableProduct.delegate = self
         tableProduct.rowHeight = UITableView.automaticDimension
@@ -49,6 +53,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         viewDisponibilidad.isHidden = true
         btnVerMas.isHidden = true
         btnVerPorMundo.isHidden = true
+
+        SavedService.shared.fetchSavedProducts { [weak self] savedProducts in
+            guard let self = self else { return }
+            print("Favoritos cargados:", savedProducts.map { $0.code })
+            self.savedCache = Set(savedProducts.map { $0.code })
+            self.tableProduct.reloadData()
+        }
         
         mostrarEstadoInicial()
     }
@@ -57,7 +68,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidAppear(animated)
         self.view.bringSubviewToFront(uvEstado)
     }
-
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if displayedProducts.isEmpty && mensajeTemporal !=  nil { return 1 }
@@ -77,34 +87,91 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "productRow",
                                                  for: indexPath ) as! ProductCell
+
         let product = displayedProducts[indexPath.row]
-        
+        print("URL imagen:", product.bestImage ?? "nil")
+
         cell.nameLabel.text = product.name ?? "Sin nombre"
-        cell.countriesLabel.text = "Países de venta: \(product.countries ?? "Desconcido")"
+        cell.countriesLabel.text = "Países de venta: \(product.countries ?? "Desconocido")"
+
+        // Reset de imagen
+        // Reset de imagen
+        cell.productImageView.image = UIImage(named: "atun_img")
+
+        if let imageUrlString = product.imageFrontSmall ?? product.bestImage,
+           let url = URL(string: imageUrlString) {
+
+            cell.imageURL = imageUrlString
+            downloadImage(into: cell.productImageView, from: url, for: imageUrlString)
+        }
+
+
+
+        guard let id = product.id else { return cell }
+
+        cell.updateSaveButtonIcon(isSaved: savedCache.contains(id))
         
-        if let imageUrl = product.bestImage, let url = URL(string: imageUrl){
-            downloadImage(into: cell.productImageView, from: url)
-        } else {
-            cell.productImageView.image = UIImage(named:"no_image")
+        cell.onFavoriteTapped = { [weak self] in
+            guard let self = self else { return }
+
+            let productToSave = Product(api: product)
+
+            SavedService.shared.toggleSavedProduct(product: productToSave) { isSaved in
+                if isSaved {
+                    self.savedCache.insert(productToSave.code)
+                } else {
+                    self.savedCache.remove(productToSave.code)
+                }
+                cell.updateSaveButtonIcon(isSaved: isSaved)
+            }
         }
         return cell
     }
     
     // MARK: FUNCIONES
     
-    func downloadImage(into imageView: UIImageView,
-                       from url:URL)
-    {
-        URLSession.shared.dataTask(with: url){
-            data, _, error in
-            guard let data = data, error == nil else { return }
-            
-            DispatchQueue.main.async{
-                imageView.image = UIImage(data: data)
+    func downloadImage(into imageView: UIImageView, from url: URL, for urlString: String) {
+        let key = urlString as NSString
+
+        // Revisar cache primero
+        if let cachedImage = imageCache.object(forKey: key) {
+            imageView.image = cachedImage
+            return
+        }
+
+        // Configurar sesión con timeout
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 20  // 10 segundos por request
+        config.timeoutIntervalForResource = 25 // 15 segundos para todo recurso
+        let session = URLSession(configuration: config)
+
+        let task = session.dataTask(with: url) { [weak self, weak imageView] data, response, error in
+            guard let imageView = imageView else { return }
+
+            if let data = data, let image = UIImage(data: data) {
+                self?.imageCache.setObject(image, forKey: key)
+                DispatchQueue.main.async {
+                    if let cell = imageView.superview(of: ProductCell.self),
+                       cell.imageURL == urlString {
+                        imageView.image = image
+                    }
+                }
+            } else {
+                // ❌ Si falla, usar la imagen por defecto
+                DispatchQueue.main.async {
+                    imageView.image = UIImage(named: "atun_img")
+                    print("❌ Error descargando imagen: \(error?.localizedDescription ?? "desconocido")")
+                }
             }
-        }.resume()
+        }
+
+        task.resume()
     }
+
+
+
     
+    // DETALLE
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -145,7 +212,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         ocultarNoDisponiblePais()
         
         lblEstado.text = "CARGANDO BÚSQUEDA..."
-        ivEstado.image = UIImage(named: "searchProd") //añadir
+        ivEstado.image = UIImage(named: "searchProd")
         
         loadingAnimation?.removeFromSuperview()
         
@@ -184,11 +251,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         tableProduct.isHidden = false
         tableProduct.superview?.bringSubviewToFront(tableProduct)
         
-        if displayedProducts.count >= 10 {
-            tableProduct.isHidden = false
-        } else {
-            btnVerMas.isHidden = true
-        }
+        btnVerMas.isHidden = displayedProducts.count < 10
     }
     
     func mostrarMensaje(_ mensaje: String)
@@ -214,7 +277,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             currentPage = 1
             displayedProducts.removeAll()
             
-            tableProduct.reloadData()
             mostrarEstadoInicial()
             return
         }
@@ -240,8 +302,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func buscarPro(nombre: String) {
-
         let pais = buscarEnTodoElMundo ? nil : selectedCountry
+        print("Buscando productos: '\(nombre)' en país: \(pais ?? "Mundo") página: \(currentPage)")
 
         ProductService.shared.searchProducts(
             query: nombre,
@@ -251,19 +313,21 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         ) { products in
 
             DispatchQueue.main.async {
+                print("Productos recibidos:", products)
 
-                // ✅ RESETEAR AL TERMINAR LA BÚSQUEDA
                 let fueBusquedaGlobal = self.buscarEnTodoElMundo
                 self.buscarEnTodoElMundo = false
 
                 // Caso1. No hay productos en este pais
                 if self.currentPage == 1 && products.isEmpty && !fueBusquedaGlobal {
+                    print("No hay productos en este país")
                     self.mostrarNoDisponiblePais()
                     return
                 }
 
                 // Caso2. No hay producto en el mundo
                 if self.currentPage == 1 && products.isEmpty && fueBusquedaGlobal {
+                    print("Producto no encontrado en el mundo")
                     self.mostrarMensaje("Producto no encontrado")
                     self.btnVerMas.isHidden = true
                     return
@@ -278,7 +342,13 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
                     self.displayedProducts += products
                 }
 
+                print("Número de productos a mostrar:", self.displayedProducts.count)
+
                 self.tableProduct.reloadData()
+                self.tableProduct.isHidden = false
+                self.uvEstado.isHidden = true
+                self.tableProduct.superview?.bringSubviewToFront(self.tableProduct)
+                print("Tabla visible, filas:", self.displayedProducts.count)
                 self.mostrarResultado()
             }
         }
@@ -334,6 +404,8 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
             return
         }
 
+        print("Inicia búsqueda para: \(text)")
+
         buscarEnTodoElMundo = false
         
         currentQuery = text
@@ -342,7 +414,6 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
         mensajeTemporal = nil
         displayedProducts.removeAll()
 
-        tableProduct.reloadData()
         mostrarEstadoCarga()
         buscarPro(nombre: text)
     }
@@ -387,4 +458,12 @@ extension SearchViewController: FilterDelegate {
     }
 }
 
-// Original Taste – Coca-Cola – 1 l
+extension UIView {
+    func superview<T>(of type: T.Type) -> T? {
+        if let view = self.superview as? T {
+            return view
+        }
+        return self.superview?.superview(of: type)
+    }
+}
+
