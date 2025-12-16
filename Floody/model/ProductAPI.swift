@@ -38,4 +38,37 @@ struct ProductSearchResult: Codable {
         case pageSize = "page_size"
         case products
     }
+    
+    init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            count = try? container.decode(Int.self, forKey: .count)
+            
+            // page puede ser Int o String
+            if let p = try? container.decode(Int.self, forKey: .page) {
+                page = p
+            } else if let pStr = try? container.decode(String.self, forKey: .page), let p = Int(pStr) {
+                page = p
+            } else {
+                page = nil
+            }
+
+            if let pc = try? container.decode(Int.self, forKey: .pageCount) {
+                pageCount = pc
+            } else if let pcStr = try? container.decode(String.self, forKey: .pageCount), let pc = Int(pcStr) {
+                pageCount = pc
+            } else {
+                pageCount = nil
+            }
+
+            if let ps = try? container.decode(Int.self, forKey: .pageSize) {
+                pageSize = ps
+            } else if let psStr = try? container.decode(String.self, forKey: .pageSize), let ps = Int(psStr) {
+                pageSize = ps
+            } else {
+                pageSize = nil
+            }
+
+            products = (try? container.decode([ProductAPI].self, forKey: .products)) ?? []
+        }
 }
