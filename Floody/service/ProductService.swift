@@ -89,7 +89,11 @@ final class ProductService {
             let name = productData["product_name"] as? String ?? "-"
             let brand = productData["brands"] as? String ?? "-"
             let countries = productData["countries"] as? String ?? "Mundial"
-            let imageURL = productData["image_url"] as? String ?? "no_image"
+            let imageURL = productData["image_url"] as? String
+                ?? productData["image_front_url"] as? String
+                ?? productData["image_front_small_url"] as? String
+                ?? productData["image_small_url"] as? String
+                ?? "no_image"
             
             let nutriments = productData["nutriments"] as? [String: Any]
             let calories = nutriments?["energy-kcal_100g"].map { "\($0)" } ?? "-"

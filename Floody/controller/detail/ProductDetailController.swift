@@ -55,12 +55,23 @@ class ProductDetailController: UIViewController {
             }
         }
         
-        func updateSaveButtonIcon(isSaved: Bool) {
-            let iconName = isSaved ? "bookmark.fill" : "bookmark" // Usa nombres SF Symbols
-            let image = UIImage(systemName: iconName)
+        func updateSaveButtonIcon(isSaved: Bool) {            let iconName = isSaved ? "bookmark.fill" : "bookmark" // Usa nombres SF Symbols
+            let symbolConfig = UIImage.SymbolConfiguration(pointSize: 25,weight: .bold, scale: .large)
+            if btnSave.configuration != nil {
+                var config = btnSave.configuration
+                config?.image = UIImage(systemName: iconName)
+                config?.preferredSymbolConfigurationForImage = symbolConfig
+                DispatchQueue.main.async {
+                    self.btnSave.configuration = config
+                }
+            }else{
+                let image = UIImage(systemName: iconName)
+                DispatchQueue.main.async {
+                    self.btnSave.setImage(image, for: .normal)
+                    self.btnSave.imageView?.contentMode = .scaleAspectFit
+                }
+            }
             DispatchQueue.main.async {
-                self.btnSave.setImage(image, for: .normal)
-                // Opcional: Cambiar color si quieres
                 self.btnSave.tintColor = isSaved ? .systemYellow : .darkGray
             }
         }

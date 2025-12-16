@@ -9,4 +9,26 @@ class ProductCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var btnSaved: UIButton!
     
+    var onSaveTapped: (() -> Void)?
+        
+        override func awakeFromNib() {
+            super.awakeFromNib()
+            setupButtonStyle()
+        }
+        
+        func setupButtonStyle() {
+         
+            let iconName = "bookmark.fill"
+            let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
+            let image = UIImage(systemName: iconName, withConfiguration: config)
+            
+            btnSaved.setImage(image, for: .normal)
+            btnSaved.tintColor = .systemYellow
+        }
+        
+   
+    @IBAction func btnSavedAction(_ sender: UIButton) {
+        onSaveTapped?()
+    }
+ 
 }

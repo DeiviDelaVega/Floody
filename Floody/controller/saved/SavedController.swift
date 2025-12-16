@@ -27,16 +27,22 @@ class SavedController: UIViewController, UICollectionViewDelegate, UICollectionV
             return savedList.count
         }
 
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "productCell", for: indexPath) as! ProductCollectionCell
             
             let product = savedList[indexPath.row]
             
             cell.lblNameProduct.text = product.name
             cell.lblOriginProduct.text = product.countries
+            cell.onSaveTapped = { [weak self] in
+                let generator = UIImpactFeedbackGenerator(style: .medium)
+                generator.impactOccurred()
+                SavedService.shared.toggleSavedProduct(product: product) { _ in
+                    print("Producto eliminado de guardados: \(product.name)")
+                }
+            }
             
-            // Carga de imagen
-            cell.ivProduct.image = UIImage(named: "no_image") // Placeholder
+            cell.ivProduct.image = UIImage(named: "no_image")
             if product.imageName.hasPrefix("http"), let url = URL(string: product.imageName) {
                 URLSession.shared.dataTask(with: url) { data, _, _ in
                     if let data = data {
@@ -72,4 +78,7 @@ class SavedController: UIViewController, UICollectionViewDelegate, UICollectionV
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: 110, height: 170)
         }
-    }
+    
+    
+   
+}
