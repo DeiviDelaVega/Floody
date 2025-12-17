@@ -7,27 +7,26 @@ import MSAL
 class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         validarFlujoInicial()
     }
-    
+
     // MARK: Validar si ya hay un pais seleccionado
     func validarFlujoInicial() {
-        let user = Auth.auth().currentUser
-        let selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry")
-        if user != nil {
-            print("Usuario ya logueado:", user?.email ?? "sin email")
-            if selectedCountry != nil {
-                goToMain()
-            } else {
-                goToCountryList()
-            }
-        } else {
+        guard let user = Auth.auth().currentUser else {
             print("Usuario nuevo = mostrar login")
+            return
         }
+
+        let uid = user.uid
+        let selectedCountry = UserDefaults.standard.string(forKey: "selectedCountry_\(uid)")
+
+        if selectedCountry != nil {
+            goToMain()
+        } else {
+            goToCountryList()
+        }
+        print("DEBUG selectedCountry:", UserDefaults.standard.dictionaryRepresentation())
+
     }
     
     // MARK: Ir a la LISTA DE PAÍSES
@@ -48,55 +47,50 @@ class LoginController: UIViewController {
     
     // MARK: GOOGLE SIGN IN
     func signInWithGoogle() {
-        // Obtiene ClientID de Fb
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-        
+
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-        
-        // Popup de google
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first,
-              let rootViewController = window.rootViewController else {
-            
-            print("No se encontró rootViewController")
-            return
-        }
-        
-        // Muestra Ventana de Google para elegir la cuenta
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
             if let error = error {
-                print("Error Google SignIn:", error.localizedDescription)
+                print("Google error:", error.localizedDescription)
                 return
             }
-            
-            // Obtiene token
+
             guard let user = result?.user,
                   let idToken = user.idToken?.tokenString else {
-                print("Error obteniendo token de Google")
+                print("Token error")
                 return
             }
-            
-            // Crea credencial x medio del Token de Fb
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                           accessToken: user.accessToken.tokenString)
-            
-            // Inicia sesion
+
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken,
+                accessToken: user.accessToken.tokenString
+            )
+
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
-                    print("Error Firebase Auth:", error.localizedDescription)
+                    print("Firebase error:", error.localizedDescription)
                     return
                 }
-                print("Usuario logueado:", authResult?.user.email ?? "sin email")
-                if UserDefaults.standard.string(forKey: "selectedCountry") == nil {
-                    self.goToCountryList()
-                } else {
-                    self.goToMain()
+
+                guard let user = authResult?.user else { return }
+                    let uid = user.uid
+
+                    let selectedCountry = UserDefaults.standard
+                        .string(forKey: "selectedCountry_\(uid)")
+                
+                print("Login OK:", authResult?.user.email ?? "")
+
+                DispatchQueue.main.async {
+                    self.validarFlujoInicial()
                 }
             }
         }
     }
-    
+
+    /*
     func signInWithOutlook() {
         
         // Id de la cuenta de Axure
@@ -140,13 +134,13 @@ class LoginController: UIViewController {
         } catch {
             print("ERROR EN CONFIGURACIÓN: \(error)")
         }
-    }
+    }*/
     
     @IBAction func btnGoogleSignIn(_ sender: GoogleButton) {
         signInWithGoogle()
     }
     
     @IBAction func btnOutlookSignIn(_ sender: UIButton) {
-        signInWithOutlook()
+        //signInWithOutlook()
     }
 }

@@ -18,8 +18,8 @@ class ProductCollectionCell: UICollectionViewCell {
         
         func setupButtonStyle() {
          
-            let iconName = "bookmark.fill"
-            let config = UIImage.SymbolConfiguration(pointSize: 25, weight: .bold, scale: .large)
+            let iconName = "bookmark.fill" //bookmark-2
+            let config = UIImage.SymbolConfiguration(pointSize: 10, weight: .bold, scale: .large)
             let image = UIImage(systemName: iconName, withConfiguration: config)
             
             btnSaved.setImage(image, for: .normal)
